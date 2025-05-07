@@ -1,50 +1,70 @@
-# Welcome to your Expo app 👋
+<h1 align="center">deep</h1>
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<h2 align="center">🚀 deep's cross-platform mobile app repository 🚀</h2>
 
-## Get started
+---
 
-1. Install dependencies
+# About the project
 
-   ```bash
-   npm install
-   ```
+This project contains the source code for `deep`'s cross-platform mobile app.
 
-2. Start the app
+`deep` is a simple and intituitive mobile game, to get to know better your friends, lovers and family.
 
-   ```bash
-    npx expo start
-   ```
+# Built with
 
-In the output, you'll find options to open the app in a
+This section list any major frameworks/libraries we're using to develop the app.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- [![ReactNative]][ReactNative-url]
+- [![Expo]][Expo-url]
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+# Getting started
 
-## Get a fresh project
+## Install dependencies
 
-When you're ready, run:
+In order to install the project dependencies, you can use `npm`.
 
 ```bash
-npm run reset-project
+npm i
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Run
 
-## Learn more
+To run the project, multiple commands are provided in the `package`:
 
-To learn more about developing your project with Expo, look at the following resources:
+### iOS
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npm run ios
+```
 
-## Join the community
+### Android
 
-Join our community of developers creating universal apps.
+```bash
+npm run android
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Web
+
+```bash
+npm run web
+```
+
+## Linting
+
+In order to lint the project, use the provided script in the `package`:
+
+```bash
+npm run lint
+```
+
+☝️ We recommended that you configure your IDE to automatically lint the project while working.
+
+# Others
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
+[ReactNative]: https://img.shields.io/badge/-React%20Native-black?style=flat&logo=react
+[ReactNative-url]: https://reactnative.dev/
+[Expo]: https://img.shields.io/badge/expo-1C1E24?style=for-the-badge&logo=expo&logoColor=
+[Expo-url]: https://expo.dev/
