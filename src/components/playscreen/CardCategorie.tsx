@@ -11,7 +11,6 @@ export function CardCategorie({
   onCategoryClick: () => void;
 }) {
   const { level, theme, cardAmount } = category;
-  console.log("CardCategorie", category);
 
   const isClickable = cardAmount > 0;
 
