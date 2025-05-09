@@ -1,39 +1,53 @@
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { StyleSheet, View, TouchableHighlight, Text } from "react-native";
+import { MaterialCommunityIcons, FontAwesome6 } from "@expo/vector-icons";
+import { StyleSheet, TouchableHighlight, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ThemedText } from "../ThemedText";
 
-export function PlayscreenHeader() {
+export function HomeFooter({
+  playDisabled,
+  handlePlayClick,
+}: {
+  playDisabled: boolean;
+  handlePlayClick: () => void;
+}) {
   /* useSafeAreaInsets() used to automatically add padding to account for the notch */
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={{ ...styles.container, paddingTop: insets.top }}>
-      {/* Title */}
-      <View>
-        <Text style={styles.title}>deep</Text>
-      </View>
-      {/* Stats button */}
+    <View
+      style={{
+        ...styles.container,
+        // No safe area insets, add padding to bottom
+        paddingBottom: insets.bottom > 0 ? insets.bottom : 10,
+      }}
+    >
+      {/* Add deck button */}
       <TouchableHighlight
         style={{ ...styles.iconButton }}
-        onPress={() => alert("Stats clicked !")}
+        onPress={() => alert("Add deck button clicked !")}
       >
-        <MaterialIcons name="bar-chart" size={24} color="#fff" />
+        <FontAwesome6 name="plus" size={24} color="white" />
       </TouchableHighlight>
-      {/* Random button */}
+      {/* Store button */}
       <TouchableHighlight
         style={{ ...styles.iconButton, backgroundColor: "#fff" }}
-        onPress={() => alert("Random clicked !")}
+        onPress={() => alert("Store button clicked !")}
       >
-        <MaterialCommunityIcons name="dice-3-outline" size={24} color="#000" />
+        <MaterialCommunityIcons
+          name="shopping-outline"
+          size={24}
+          color="black"
+        />
       </TouchableHighlight>
-      {/* End game button */}
+      {/* Start game button */}
       <TouchableHighlight
-        style={styles.button}
-        onPress={() => alert("Fin de partie clicked !")}
+        // TODO: animate opacity change
+        style={{ ...styles.button, ...(playDisabled ? styles.disabled : {}) }}
+        disabled={playDisabled}
+        onPress={handlePlayClick}
       >
-        <Text style={styles.buttonText}>Fin de partie</Text>
+        <ThemedText style={styles.buttonText}>Jouer</ThemedText>
       </TouchableHighlight>
-      {/* <Text style={styles.title}>My App Header</Text> */}
     </View>
   );
 }
@@ -46,11 +60,6 @@ const styles = StyleSheet.create({
     gap: 10,
     backgroundColor: "rgba(0, 0, 0, .4)",
   },
-  title: {
-    fontSize: 20,
-    color: "rgba(255, 255, 255, 1)",
-    fontWeight: "300",
-  },
   button: {
     flexGrow: 1, // This ensure that the button take the whole available space
     display: "flex",
@@ -60,6 +69,9 @@ const styles = StyleSheet.create({
     borderRadius: 1000,
     borderWidth: 1,
     borderColor: "#fff",
+  },
+  disabled: {
+    opacity: 0.4,
   },
   buttonText: {
     color: "#fff",

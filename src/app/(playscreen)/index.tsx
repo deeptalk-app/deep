@@ -1,6 +1,5 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { CardCategorie } from "../../components/playscreen/CardCategorie";
-import { ScrollView } from "react-native-gesture-handler";
 import { useState } from "react";
 import { Card } from "@/src/types/card.type";
 import { Category } from "@/src/types/category.type";
