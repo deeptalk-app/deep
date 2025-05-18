@@ -3,6 +3,7 @@ import { StyleSheet, TouchableHighlight, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "../ThemedText";
 import { IconButton } from "../IconButton";
+import { Button } from "../Button";
 
 export function HomeFooter({
   playDisabled,
@@ -42,17 +43,9 @@ export function HomeFooter({
         }
       />
       {/* Start game button */}
-      <TouchableHighlight
-        // style={{ ...styles.button, ...(playDisabled ? styles.disabled : {}) }}
-        className={[
-          "flex-1 items-center p-5 rounded-[1000px] border border-white opacity-40 bg-black/[.4]",
-          !playDisabled && "opacity-100",
-        ].join(" ")}
-        disabled={playDisabled}
-        onPress={handlePlayClick}
-      >
+      <Button disabled={playDisabled} onPress={handlePlayClick}>
         <ThemedText style={styles.buttonText}>Jouer</ThemedText>
-      </TouchableHighlight>
+      </Button>
     </View>
   );
 }

@@ -26,9 +26,9 @@ export function DeckComponent({
       />
       <TouchableHighlight
         className={[
-          "content-center items-center justify-center p-5 w-[90px] h-[60px] rounded-lg bg-black/[.4] opacity-40 shadow",
-          // If selected
-          selected && "opacity-100 font-bold",
+          "content-center items-center justify-center p-5 w-[90px] h-[60px] rounded-lg bg-black/[.4] opacity-100 shadow",
+          !selected && "opacity-40",
+          selected && "font-bold",
         ].join(" ")}
         onPress={() => handleDeckSelected(id)}
         onLongPress={() => setIsModalVisible(true)}
