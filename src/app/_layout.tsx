@@ -6,9 +6,9 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
 import { ImageBackground, StyleSheet } from "react-native";
-import { useColorScheme } from "@/src/hooks/useColorScheme";
 import { DeepTheme } from "../themes/deep.theme";
 import "../../assets/styles/global.css";
+import { verifyInstallation } from "nativewind";
 
 const image = require("../../assets/images/bg.png");
 
@@ -16,7 +16,8 @@ const image = require("../../assets/images/bg.png");
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  verifyInstallation();
+
   const [loaded] = useFonts({
     SpaceMono: require("../../assets/fonts/SpaceMono-Regular.ttf"),
     KronaOne: require("../../assets/fonts/KronaOne-Regular.ttf"),

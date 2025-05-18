@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, Text } from "react-native";
 import { Deck } from "../../types/deck.type";
 import { DeckComponent } from "./DeckComponent";
 import { ThemedText } from "../ThemedText";
@@ -14,39 +14,32 @@ export function DeckListComponent({
   selectedDecks: Deck[];
   handleDeckSelected: (id: number) => void;
 }) {
-  if (decks.length === 0) {
-    return (
-      <>
-        <ThemedText type="subtitle" style={styles.title}>
-          {title}:
-        </ThemedText>
-        <ThemedText>Aucun deck téléchargé</ThemedText>
-      </>
-    );
-  }
   return (
     <>
-      <ThemedText type="subtitle" style={styles.title}>
-        {title}:
-      </ThemedText>
-      <ScrollView horizontal={true} contentContainerStyle={styles.deckList}>
-        {decks.map((deck) => {
-          const isSelected = selectedDecks.some(({ id }) => id === deck.id);
-          return (
-            <DeckComponent
-              key={deck.id}
-              deck={deck}
-              handleDeckSelected={handleDeckSelected}
-              selected={isSelected}
-            />
-          );
-        })}
-      </ScrollView>
+      <ThemedText variant="subtitle">{title}:</ThemedText>
+      {/* Deck is not empty */}
+      {decks.length > 0 ? (
+        <ScrollView horizontal={true} contentContainerStyle={styles.deckList}>
+          {decks.map((deck) => {
+            const isSelected = selectedDecks.some(({ id }) => id === deck.id);
+            return (
+              <DeckComponent
+                key={deck.id}
+                deck={deck}
+                handleDeckSelected={handleDeckSelected}
+                selected={isSelected}
+              />
+            );
+          })}
+        </ScrollView>
+      ) : (
+        //  Deck is empty
+        <ThemedText>Aucun deck disponible...</ThemedText>
+      )}
     </>
   );
 }
 
 const styles = StyleSheet.create({
   deckList: { gap: 10 },
-  title: {},
 });

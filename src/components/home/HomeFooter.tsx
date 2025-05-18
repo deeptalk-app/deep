@@ -2,6 +2,7 @@ import { MaterialCommunityIcons, FontAwesome6 } from "@expo/vector-icons";
 import { StyleSheet, TouchableHighlight, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "../ThemedText";
+import { IconButton } from "../IconButton";
 
 export function HomeFooter({
   playDisabled,
@@ -16,33 +17,37 @@ export function HomeFooter({
   return (
     <View
       style={{
-        ...styles.container,
         // No safe area insets, add padding to bottom
         paddingBottom: insets.bottom > 0 ? insets.bottom : 10,
       }}
+      className="p-5 flex-row items-center gap-5 bg-black/[.4]"
     >
       {/* Add deck button */}
-      <TouchableHighlight
-        style={{ ...styles.iconButton }}
+      <IconButton
         onPress={() => alert("Add deck button clicked !")}
-      >
-        <FontAwesome6 name="plus" size={24} color="white" />
-      </TouchableHighlight>
+        icon={<FontAwesome6 name="plus" size={18} color="#fff" />}
+        disabled
+      />
       {/* Store button */}
-      <TouchableHighlight
-        style={{ ...styles.iconButton, backgroundColor: "#fff" }}
-        onPress={() => alert("Store button clicked !")}
-      >
-        <MaterialCommunityIcons
-          name="shopping-outline"
-          size={24}
-          color="black"
-        />
-      </TouchableHighlight>
+      <IconButton
+        onPress={() => alert("Add deck button clicked !")}
+        variant="contained"
+        disabled
+        icon={
+          <MaterialCommunityIcons
+            name="shopping-outline"
+            size={18}
+            color="#000"
+          />
+        }
+      />
       {/* Start game button */}
       <TouchableHighlight
-        // TODO: animate opacity change
-        style={{ ...styles.button, ...(playDisabled ? styles.disabled : {}) }}
+        // style={{ ...styles.button, ...(playDisabled ? styles.disabled : {}) }}
+        className={[
+          "flex-1 items-center p-5 rounded-[1000px] border border-white opacity-40 bg-black/[.4]",
+          !playDisabled && "opacity-100",
+        ].join(" ")}
         disabled={playDisabled}
         onPress={handlePlayClick}
       >
@@ -76,12 +81,5 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     textAlign: "center",
-  },
-  iconButton: {
-    padding: 10,
-    backgroundColor: "rgba(0, 0, 0, .4)",
-    borderRadius: "100%",
-    borderWidth: 1,
-    borderColor: "#fff",
   },
 });

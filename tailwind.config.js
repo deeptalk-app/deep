@@ -4,7 +4,15 @@ module.exports = {
   content: ["./src/app/**/*.{js,jsx,ts,tsx}", "./src/components/**/*.{js,jsx,ts,tsx}"],
   presets: [require("nativewind/preset")],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        contrast: "#ffecc8"
+      },
+      fontFamily: {
+        "jost-regular": "Jost",
+        "kronaone-regular": "KronaOne",
+      },
+    },
   },
   plugins: [],
 }

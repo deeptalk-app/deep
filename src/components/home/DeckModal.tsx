@@ -31,22 +31,18 @@ export function DeckModal({
         setVisible(false);
       }}
     >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <View style={styles.content}>
-            <View style={styles.header}>
+      <View className="flex-1 justify-center items-center p-5 bg-black/[.9]">
+        <View className="w-full bg-black/[.4] rounded-lg p-12 shadow-md">
+          <View className="w-full flex-col content-center gap-5">
+            <View className="flex-row justify-between">
               {icon}
               <TouchableWithoutFeedback onPress={() => setVisible(false)}>
                 <Entypo name="cross" size={24} color="#fff" />
               </TouchableWithoutFeedback>
             </View>
-            <View style={styles.description}>
-              <ThemedText type="title" style={styles.text}>
-                {title}
-              </ThemedText>
-              <ThemedText type="subtitle" style={styles.text}>
-                {numberOfCards} cartes
-              </ThemedText>
+            <View className="gap-2">
+              <ThemedText variant="title">{title}</ThemedText>
+              <ThemedText variant="subtitle">{numberOfCards} cartes</ThemedText>
             </View>
             <ScrollView horizontal={true}></ScrollView>
           </View>
@@ -55,47 +51,3 @@ export function DeckModal({
     </Modal>
   );
 }
-
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    backgroundColor: "rgba(0, 0, 0, .9)",
-  },
-  modalView: {
-    margin: 20,
-    width: "100%",
-    backgroundColor: "rgba(0, 0, 0, .4)",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  content: {
-    width: "100%",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    gap: 10,
-  },
-  header: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  description: {
-    gap: 5,
-  },
-  text: {
-    lineHeight: 0,
-    color: "#fff",
-  },
-});

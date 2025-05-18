@@ -1,11 +1,9 @@
-import { ImageBackground, StyleSheet, View } from "react-native";
+import { View, Text } from "react-native";
 import { HomeFooter } from "../../components/home/HomeFooter";
 import { Deck } from "../../types/deck.type";
 import { useState } from "react";
-import { Entypo, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { DeckListComponent } from "../../components/home/DeckListComponent";
-import { ThemedText } from "../../components/ThemedText";
-import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 /** temporary value before we have a real store */
 const decks: Deck[] = [
@@ -26,8 +24,6 @@ const decks: Deck[] = [
 const downloadedDecks: Deck[] = [];
 
 export default function Home() {
-  const mainColor = useThemeColor("main");
-  const contrastColor = useThemeColor("contrast");
   const [selectedDecks, setSelectedDecks] = useState<Deck[]>([]);
 
   const playDisabled = selectedDecks.length === 0;
@@ -51,16 +47,16 @@ export default function Home() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
+    <View className="flex-1 justify-end gap-y-2">
+      <View className="p-5 gap-2 mb-[20%]">
         {/* Title */}
-        <View style={styles.titleContainer}>
-          <ThemedText style={{ ...styles.subtitle, color: mainColor }}>
+        <View>
+          <Text className="text-4xl font-jost-regular text-white">
             Oserez vous
-          </ThemedText>
-          <ThemedText style={{ ...styles.title, color: contrastColor }}>
+          </Text>
+          <Text className="text-5xl font-kronaone-regular text-contrast">
             tout dire ?
-          </ThemedText>
+          </Text>
         </View>
         {/* List of default decks */}
         <DeckListComponent
@@ -72,7 +68,7 @@ export default function Home() {
         {/* List of downloaded decks */}
         <DeckListComponent
           title={"Decks téléchargés"}
-          decks={[]}
+          decks={downloadedDecks}
           selectedDecks={selectedDecks}
           handleDeckSelected={handleDeckSelected}
         />
@@ -85,50 +81,3 @@ export default function Home() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {},
-  title: {
-    fontFamily: "KronaOne",
-    fontSize: 42,
-    fontWeight: "bold",
-    lineHeight: 0,
-  },
-  subtitle: {
-    fontFamily: "KronaOne",
-    fontSize: 24,
-    fontWeight: "regular",
-    lineHeight: 0,
-  },
-  container: {
-    flex: 1,
-    // Elements start from the bottom
-    justifyContent: "flex-end",
-    gap: 10,
-  },
-  content: {
-    padding: 15,
-    gap: 10,
-    marginBottom: "20%",
-  },
-  deckList: { gap: 10 },
-  deck: {
-    alignItems: "center",
-    gap: 4,
-  },
-  deckIcon: {
-    alignContent: "center",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 10,
-    width: 80,
-    height: 60,
-    borderRadius: 7,
-    backgroundColor: "rgba(0, 0, 0, .4)",
-    opacity: 0.4,
-  },
-  selected: {
-    opacity: 1,
-    fontWeight: "bold",
-  },
-});

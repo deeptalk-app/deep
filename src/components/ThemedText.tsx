@@ -1,61 +1,29 @@
-import { Text, type TextProps, StyleSheet } from "react-native";
+import { Text, type TextProps } from "react-native";
 
-import { useThemeColor } from "@/src/hooks/useThemeColor";
+const variantStyles = {
+  default: "text-md font-jost-regular text-white",
+  title: "text-2xl font-bold",
+  subtitle: "text-2xl",
+  link: "",
+};
 
 export type ThemedTextProps = TextProps & {
-  type?: "default" | "title" | "defaultSemiBold" | "subtitle" | "link";
+  variant?: keyof typeof variantStyles;
 };
 
 export function ThemedText({
-  style,
-  type = "default",
+  variant = "default",
+  className = "",
   ...rest
 }: ThemedTextProps) {
-  const color = useThemeColor("text");
-
   return (
     <Text
-      style={[
-        { color },
-        type === "default" ? styles.default : undefined,
-        type === "title" ? styles.title : undefined,
-        type === "defaultSemiBold" ? styles.defaultSemiBold : undefined,
-        type === "subtitle" ? styles.subtitle : undefined,
-        type === "link" ? styles.link : undefined,
-        style,
-      ]}
+      className={`
+      ${variantStyles.default}
+      ${variantStyles[variant]}
+      ${className}
+    `}
       {...rest}
     />
   );
 }
-
-const styles = StyleSheet.create({
-  default: {
-    fontFamily: "Jost",
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  defaultSemiBold: {
-    fontFamily: "Jost",
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: "600",
-  },
-  title: {
-    fontFamily: "Jost",
-    fontSize: 32,
-    fontWeight: "bold",
-    lineHeight: 32,
-  },
-  subtitle: {
-    fontFamily: "Jost",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  link: {
-    fontFamily: "Jost",
-    lineHeight: 30,
-    fontSize: 16,
-    color: "#0a7ea4",
-  },
-});

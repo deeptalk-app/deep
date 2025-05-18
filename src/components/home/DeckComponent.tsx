@@ -17,7 +17,7 @@ export function DeckComponent({
   const { id, title, icon } = deck;
 
   return (
-    <View key={id} style={styles.deck}>
+    <View key={id} className="pl-2 pr-2 items-center gap-2 min-w-[120px]">
       {/* Modal for the deck description */}
       <DeckModal
         deck={deck}
@@ -25,74 +25,17 @@ export function DeckComponent({
         setVisible={setIsModalVisible}
       />
       <TouchableHighlight
-        style={{
-          ...styles.deckIcon,
-          ...(selected ? styles.selected : {}),
-        }}
+        className={[
+          "content-center items-center justify-center p-5 w-[90px] h-[60px] rounded-lg bg-black/[.4] opacity-40 shadow",
+          // If selected
+          selected && "opacity-100 font-bold",
+        ].join(" ")}
         onPress={() => handleDeckSelected(id)}
         onLongPress={() => setIsModalVisible(true)}
       >
         <View>{icon}</View>
       </TouchableHighlight>
-      <ThemedText style={selected ? styles.selected : {}}>{title}</ThemedText>
+      <ThemedText className={selected ? "font-bold" : ""}>{title}</ThemedText>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  deck: {
-    paddingLeft: 2,
-    paddingRight: 2,
-    alignItems: "center",
-    gap: 4,
-  },
-  deckIcon: {
-    alignContent: "center",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 10,
-    width: 80,
-    height: 60,
-    borderRadius: 7,
-    backgroundColor: "rgba(0, 0, 0, .4)",
-    opacity: 0.4,
-    // Shadow
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 2.5,
-      height: 2.5,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 5,
-  },
-  selected: {
-    opacity: 1,
-    fontWeight: "bold",
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    backgroundColor: "rgba(0, 0, 0, .5)",
-  },
-  modalView: {
-    margin: 20,
-    width: "100%",
-    height: "80%",
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    // Shadow
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-});
