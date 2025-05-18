@@ -8,6 +8,7 @@ import "react-native-reanimated";
 import { ImageBackground, StyleSheet } from "react-native";
 import { useColorScheme } from "@/src/hooks/useColorScheme";
 import { DeepTheme } from "../themes/deep.theme";
+import "../../assets/styles/global.css";
 
 const image = require("../../assets/images/bg.png");
 
