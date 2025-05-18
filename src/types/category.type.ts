@@ -1,9 +1,8 @@
 import { Card } from "./card.type";
 
 export type Category = {
-  id: number;
+  id: string;
   theme: string;
   level: number;
-  cardAmount: number;
   cards: Card[];
 };

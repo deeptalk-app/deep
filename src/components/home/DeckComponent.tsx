@@ -1,4 +1,4 @@
-import { StyleSheet, View, TouchableHighlight } from "react-native";
+import { View, TouchableHighlight } from "react-native";
 import { Deck } from "../../types/deck.type";
 import { useState } from "react";
 import { DeckModal } from "./DeckModal";
@@ -10,7 +10,7 @@ export function DeckComponent({
   selected,
 }: {
   deck: Deck;
-  handleDeckSelected: (id: number) => void;
+  handleDeckSelected: (id: string) => void;
   selected: boolean;
 }) {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);

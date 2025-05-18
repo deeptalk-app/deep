@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView, Text } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import { Deck } from "../../types/deck.type";
 import { DeckComponent } from "./DeckComponent";
 import { ThemedText } from "../ThemedText";
@@ -12,7 +12,7 @@ export function DeckListComponent({
   title: string;
   decks: Deck[];
   selectedDecks: Deck[];
-  handleDeckSelected: (id: number) => void;
+  handleDeckSelected: (id: string) => void;
 }) {
   return (
     <>

@@ -1,30 +1,15 @@
 import { View, Text } from "react-native";
 import { HomeFooter } from "../../components/home/HomeFooter";
 import { Deck } from "../../types/deck.type";
-import { useState } from "react";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { DeckListComponent } from "../../components/home/DeckListComponent";
+import { useDecks } from "@/src/contexts/DeckContext";
 
 /** temporary value before we have a real store */
-const decks: Deck[] = [
-  {
-    id: 0,
-    title: "Kings & Queens",
-    icon: <FontAwesome5 name="crown" size={24} color="#fff" />,
-    categories: [],
-  },
-  {
-    id: 1,
-    title: "Love",
-    icon: <FontAwesome name="heart" size={24} color="#fff" />,
-    categories: [],
-  },
-];
 
 const downloadedDecks: Deck[] = [];
 
 export default function Home() {
-  const [selectedDecks, setSelectedDecks] = useState<Deck[]>([]);
+  const { selectedDecks, decks, removeDeck, addDeck } = useDecks();
 
   const playDisabled = selectedDecks.length === 0;
 
@@ -33,16 +18,16 @@ export default function Home() {
     alert(`Play button clicked !`);
   };
 
-  const handleDeckSelected = (deckId: number): void => {
+  const handleDeckSelected = (deckId: string): void => {
     if (selectedDecks.some(({ id }) => id === deckId)) {
       // Deck is already selected -> unselect it
-      setSelectedDecks((curr) => curr.filter(({ id }) => id !== deckId));
+      removeDeck(deckId);
     } else {
       // Deck is not selected -> select it
       const deck = decks.find(({ id }) => id === deckId);
       // This should not happen but check just in case
       if (!deck) return;
-      setSelectedDecks((curr) => [...curr, deck]);
+      addDeck(deck);
     }
   };
 

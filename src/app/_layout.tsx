@@ -9,6 +9,7 @@ import { ImageBackground, StyleSheet } from "react-native";
 import { DeepTheme } from "../themes/deep.theme";
 import "../../assets/styles/global.css";
 import { verifyInstallation } from "nativewind";
+import { DeckProvider } from "../contexts/DeckContext";
 
 const image = require("../../assets/images/bg.png");
 
@@ -41,12 +42,17 @@ export default function RootLayout() {
         style={styles.backgroundImage}
         resizeMode={"cover"}
       >
-        <Stack>
-          <Stack.Screen name="(home)" options={{ headerShown: false }} />
-          <Stack.Screen name="(playscreen)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
+        <DeckProvider>
+          <Stack>
+            <Stack.Screen name="(home)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="(playscreen)"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+        </DeckProvider>
       </ImageBackground>
     </ThemeProvider>
   );
