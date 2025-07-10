@@ -10,6 +10,7 @@ import { DeepTheme } from "../themes/deep.theme";
 import "../../assets/styles/global.css";
 import { verifyInstallation } from "nativewind";
 import { DeckProvider } from "../contexts/DeckContext";
+import { GameProvider } from "../contexts/GameContext";
 
 const image = require("../../assets/images/bg.png");
 
@@ -43,15 +44,17 @@ export default function RootLayout() {
         resizeMode={"cover"}
       >
         <DeckProvider>
-          <Stack>
-            <Stack.Screen name="(home)" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="(playscreen)"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-          <StatusBar style="auto" />
+          <GameProvider>
+            <Stack>
+              <Stack.Screen name="(home)" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="(playscreen)"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+            <StatusBar style="auto" />
+          </GameProvider>
         </DeckProvider>
       </ImageBackground>
     </ThemeProvider>

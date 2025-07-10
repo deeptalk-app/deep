@@ -1,10 +1,14 @@
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { StyleSheet, View, TouchableHighlight, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useGame } from "../../contexts/GameContext";
+import { decks } from "../../constants/deck.default";
 
 export function PlayscreenHeader() {
   /* useSafeAreaInsets() used to automatically add padding to account for the notch */
   const insets = useSafeAreaInsets();
+
+  const { initGame } = useGame();
 
   return (
     <View style={{ ...styles.container, paddingTop: insets.top }}>
@@ -27,10 +31,8 @@ export function PlayscreenHeader() {
         <MaterialCommunityIcons name="dice-3-outline" size={24} color="#000" />
       </TouchableHighlight>
       {/* End game button */}
-      <TouchableHighlight
-        style={styles.button}
-        onPress={() => alert("Fin de partie clicked !")}
-      >
+      {/* TODO: change */}
+      <TouchableHighlight style={styles.button} onPress={() => initGame(decks)}>
         <Text style={styles.buttonText}>Fin de partie</Text>
       </TouchableHighlight>
       {/* <Text style={styles.title}>My App Header</Text> */}
