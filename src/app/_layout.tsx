@@ -11,6 +11,7 @@ import "../../assets/styles/global.css";
 import { verifyInstallation } from "nativewind";
 import { DeckProvider } from "../contexts/DeckContext";
 import { GameProvider } from "../contexts/GameContext";
+import { PlayscreenHeader } from "../components/playscreen/PlayscreenHeader";
 
 const image = require("../../assets/images/bg.png");
 
@@ -49,7 +50,9 @@ export default function RootLayout() {
               <Stack.Screen name="(home)" options={{ headerShown: false }} />
               <Stack.Screen
                 name="(playscreen)"
-                options={{ headerShown: false }}
+                options={{
+                  header: () => <PlayscreenHeader />,
+                }}
               />
               <Stack.Screen name="+not-found" />
             </Stack>

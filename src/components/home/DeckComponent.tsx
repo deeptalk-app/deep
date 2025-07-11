@@ -17,7 +17,7 @@ export function DeckComponent({
   const { id, title, icon } = deck;
 
   return (
-    <View key={id} className="pl-2 pr-2 items-center gap-2 min-w-[120px]">
+    <View className="pl-2 pr-2 items-center gap-2 min-w-[120px]">
       {/* Modal for the deck description */}
       <DeckModal
         deck={deck}

@@ -1,18 +1,16 @@
 import { Stack } from "expo-router";
 import React from "react";
-import { useColorScheme } from "@/src/hooks/useColorScheme";
-import { PlayscreenHeader } from "../../components/playscreen/PlayscreenHeader";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Stack
       screenOptions={{
-        header: () => <PlayscreenHeader />,
+        animation: "fade_from_bottom",
+        headerShown: false,
       }}
     >
       <Stack.Screen name="index" />
+      <Stack.Screen name="[category]" />
     </Stack>
   );
 }
