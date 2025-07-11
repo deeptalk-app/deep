@@ -5,7 +5,6 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
-import { ImageBackground, StyleSheet } from "react-native";
 import { DeepTheme } from "../themes/deep.theme";
 import "../../assets/styles/global.css";
 import { verifyInstallation } from "nativewind";
@@ -39,35 +38,23 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={DeepTheme}>
-      <ImageBackground
-        source={image}
-        style={styles.backgroundImage}
-        resizeMode={"cover"}
-      >
-        <DeckProvider>
-          <GameProvider>
-            <Stack>
-              <Stack.Screen name="(home)" options={{ headerShown: false }} />
-              <Stack.Screen
-                name="(playscreen)"
-                options={{
-                  header: () => <PlayscreenHeader />,
-                }}
-              />
-              <Stack.Screen name="+not-found" />
-            </Stack>
-            <StatusBar style="auto" />
-          </GameProvider>
-        </DeckProvider>
-      </ImageBackground>
+      <DeckProvider>
+        <GameProvider>
+          <Stack
+            screenOptions={{ contentStyle: { backgroundColor: "#0f0f0f" } }}
+          >
+            <Stack.Screen name="(home)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="(playscreen)"
+              options={{
+                header: () => <PlayscreenHeader />,
+              }}
+            />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+        </GameProvider>
+      </DeckProvider>
     </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-  },
-});

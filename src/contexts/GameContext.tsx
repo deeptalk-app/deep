@@ -1,13 +1,6 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import { Deck } from "../types/deck.type";
 import { Card } from "../types/card.type";
-import { decks } from "../constants/deck.default";
 import { shuffleList } from "../functions/array";
 
 // Type for context value
@@ -83,11 +76,6 @@ export const GameProvider = ({ children }: GameProviderProps) => {
     setSelectedDeck(shuffledGame);
     setPlayedCards([]);
   };
-
-  // Temp
-  useEffect(() => {
-    initGame(decks);
-  }, []);
 
   return (
     <GameContext.Provider

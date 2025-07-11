@@ -1,14 +1,35 @@
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { StyleSheet, View, TouchableHighlight, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TouchableHighlight,
+  Text,
+  Alert,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useGame } from "../../contexts/GameContext";
-import { decks } from "../../constants/deck.default";
+import { useRouter } from "expo-router";
 
 export function PlayscreenHeader() {
   /* useSafeAreaInsets() used to automatically add padding to account for the notch */
   const insets = useSafeAreaInsets();
 
-  const { initGame } = useGame();
+  const router = useRouter();
+
+  /** This method is used to handle the click on the 'end game' button. */
+  const handleEndGamePress = () => {
+    Alert.alert("Êtes-vous sûr.e de vouloir terminer la partie ?", "", [
+      {
+        text: "Non",
+        style: "cancel",
+      },
+      {
+        text: "Oui",
+        onPress: () => router.back(),
+        style: "destructive",
+      },
+    ]);
+    // router.back();
+  };
 
   return (
     <View style={{ ...styles.container, paddingTop: insets.top }}>
@@ -31,8 +52,7 @@ export function PlayscreenHeader() {
         <MaterialCommunityIcons name="dice-3-outline" size={24} color="#000" />
       </TouchableHighlight>
       {/* End game button */}
-      {/* TODO: change */}
-      <TouchableHighlight style={styles.button} onPress={() => initGame(decks)}>
+      <TouchableHighlight style={styles.button} onPress={handleEndGamePress}>
         <Text style={styles.buttonText}>Fin de partie</Text>
       </TouchableHighlight>
       {/* <Text style={styles.title}>My App Header</Text> */}
