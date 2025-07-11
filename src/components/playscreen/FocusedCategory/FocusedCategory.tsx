@@ -31,7 +31,9 @@ export default function FocusedCategory({
       <View className="flex h-3/4 w-full">
         <Swiper
           cards={swipeCards}
-          renderCard={(card) => {
+          renderCard={(card, index) => {
+            // First drawn card automatically get added to the played card
+            if (index === 0) addPlayedCard(card);
             return (
               <View className="flex h-2/3 p-0 align-top">
                 <PlayingCard card={card} simplified={false} />
