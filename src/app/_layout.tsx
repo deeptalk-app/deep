@@ -1,24 +1,28 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
+import { ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
+import { ImageBackground, StyleSheet } from "react-native";
+import { DeepTheme } from "../themes/deep.theme";
+import "../../assets/styles/global.css";
+import { verifyInstallation } from "nativewind";
+import { DeckProvider } from "../contexts/DeckContext";
 
-import { useColorScheme } from "@/src/hooks/useColorScheme";
+const image = require("../../assets/images/bg.png");
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  verifyInstallation();
+
   const [loaded] = useFonts({
     SpaceMono: require("../../assets/fonts/SpaceMono-Regular.ttf"),
+    KronaOne: require("../../assets/fonts/KronaOne-Regular.ttf"),
+    Jost: require("../../assets/fonts/Jost-VariableFont_wght.ttf"),
   });
 
   useEffect(() => {
@@ -32,12 +36,32 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
+    <ThemeProvider value={DeepTheme}>
+      <ImageBackground
+        source={image}
+        style={styles.backgroundImage}
+        resizeMode={"cover"}
+      >
+        <DeckProvider>
+          <Stack>
+            <Stack.Screen name="(home)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="(playscreen)"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+        </DeckProvider>
+      </ImageBackground>
     </ThemeProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
+});
