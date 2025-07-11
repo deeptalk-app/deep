@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { fadeIn, fadeOut } from "./fadeStore";
 
 export function useBackgroundFade({
-  fadeTo = 0.2,
+  fadeTo = 0,
   duration = 300,
   restoreOnUnmount = true,
 }: {

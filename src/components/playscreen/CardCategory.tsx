@@ -25,7 +25,7 @@ export function CardCategory({
         <View>
           {/* Level */}
           <Text className="text-lg text-white font-kronaone-regular">
-            Niveau {level}
+            {level}
           </Text>
           {/* Theme */}
           <Text className="text-md text-white font-kronaone-regular">
