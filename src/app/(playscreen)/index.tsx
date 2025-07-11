@@ -1,126 +1,92 @@
-import { StyleSheet, View, Text, ScrollView } from "react-native";
-import { CardCategorie } from "../../components/playscreen/CardCategorie";
+import { View, Text, ScrollView, StyleSheet, Animated } from "react-native";
+import { CardCategory } from "../../components/playscreen/CardCategory";
 import { useState } from "react";
 import { Card } from "@/src/types/card.type";
-import { Category } from "@/src/types/category.type";
-import PlayingCard from "@/src/components/playscreen/PlayingCard";
+import { useGame } from "../../contexts/GameContext";
+import FocusedCategory from "../../components/playscreen/FocusedCategory/FocusedCategory";
+import { Category } from "../../types/category.type";
+import { useRouter } from "expo-router";
+import backgroundFade from "../../hooks/fade/fadeStore";
 
+type FocusedItem = {
+  deckId: string;
+  category: Category;
+};
 export default function PlayingPage() {
-  const [selectedCard, setSelectedCard] = useState<Card | undefined>();
-
-  const initialCategories: Category[] = [
-    {
-      id: 1,
-      theme: "Ami",
-      level: 1,
-      cardAmount: 31,
-      cards: [
-        { id: 1, content: "Card 1" },
-        { id: 2, content: "Card 2" },
-      ],
-    },
-    {
-      id: 2,
-      theme: "Amour",
-      level: 2,
-      cardAmount: 2,
-      cards: [
-        { id: 1, content: "Card 1" },
-        { id: 2, content: "Card 2" },
-      ],
-    },
-    {
-      id: 3,
-      theme: "Parent",
-      level: 3,
-      cardAmount: 19,
-      cards: [
-        { id: 1, content: "Card 1" },
-        { id: 2, content: "Card 2" },
-      ],
-    },
-  ];
-  const [categories, setCategories] = useState(initialCategories);
+  const [focusedItem, setFocusedItem] = useState<FocusedItem | undefined>();
+  const { selectedDeck, playedCards } = useGame();
+  const router = useRouter();
 
   /**
-   * This method will pick a random card from the selected category
-   *
-   * @param {Card[]} cards The list of cards to pick from
-   * @returns {Card}
+   * This method handles the click of a category
    */
-  const pickRandomCard = (cards: Card[]): Card => {
-    const randomNumber = Math.floor(Math.random() * cards.length);
-    return cards[randomNumber];
-  };
-
-  const handleCategoryClick = (categoryId: number): void => {
-    const selectedCategory = categories.find(({ id }) => categoryId === id);
-    if (!selectedCategory) return;
-    if (selectedCategory.cardAmount <= 0) return;
-
-    const nextCategories = categories.map((category) => {
-      if (category.id === categoryId) {
-        return { ...category, cardAmount: category.cardAmount - 1 };
-      } else {
-        return category;
-      }
+  const handleCategoryClick = (deckId: string, category: Category) => {
+    router.push({
+      pathname: "/(playscreen)/[category]",
+      params: { category: category.id },
     });
-    setCategories(nextCategories);
-
-    const randomCard = pickRandomCard(selectedCategory.cards);
-    setSelectedCard(randomCard);
   };
 
-  if (selectedCard !== undefined) {
-    if (!selectedCard) return <Text>Card not found</Text>;
+  /**
+   * This method will filter out the played cards from the given list of cards
+   *
+   * @param {Card[]} cards The list of cards to filter
+   * @returns {Card[]} The filtered list of cards
+   */
+  const filterPlayedCards = (cards: Card[]): Card[] => {
+    return cards.filter(
+      ({ id: cardId }) => !playedCards.some(({ id }) => cardId === id)
+    );
+  };
+
+  // Played has selected a card
+  if (focusedItem) {
+    const filteredCards = filterPlayedCards(focusedItem.category.cards);
 
     return (
-      <View>
-        <PlayingCard card={selectedCard}></PlayingCard>
-      </View>
+      <FocusedCategory
+        key={focusedItem.category.id}
+        cards={filteredCards}
+        dismiss={() => setFocusedItem(undefined)}
+      />
     );
   }
 
+  // No card has been selected
   return (
-    <ScrollView style={styles.mainContainer}>
-      <Text>Piochez !</Text>
-      <View style={styles.list}>
-        {categories.map((category) => (
-          <CardCategorie
-            key={category.id}
-            category={category}
-            onCategoryClick={() => handleCategoryClick(category.id)}
-          />
+    <Animated.View
+      style={{ flex: 1, opacity: backgroundFade }}
+      className="flex-1 justify-end p-5 gap-y-2"
+    >
+      {/* Title */}
+      <Text className="text-5xl font-kronaone-regular text-white">Piochez</Text>
+      {/* List of categories */}
+      <ScrollView contentContainerStyle={styles.deckList}>
+        {selectedDeck.map(({ id, categories }) => (
+          // View for deck
+          <View key={id} style={styles.deckList}>
+            {/* Categories within deck */}
+            {categories.map((category) => {
+              // Filter out already played cards
+              const filteredCategory = {
+                ...category,
+                cards: filterPlayedCards(category.cards),
+              };
+              return (
+                <CardCategory
+                  key={category.id}
+                  category={filteredCategory}
+                  onCategoryClick={() => handleCategoryClick(id, category)}
+                />
+              );
+            })}
+          </View>
         ))}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  list: {
-    flex: 1,
-    gap: 10,
-    padding: 10,
-  },
-  titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-  },
+  deckList: { gap: 10 },
 });

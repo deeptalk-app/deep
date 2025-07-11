@@ -24,6 +24,14 @@ export const decks: Deck[] = [
             id: "card-0-2",
             content: "This is card content #1.3",
           },
+          {
+            id: "card-0-3",
+            content: "This is card content #1.4",
+          },
+          {
+            id: "card-0-4",
+            content: "This is card content #1.5",
+          },
         ],
       },
       {

@@ -3,19 +3,25 @@ import { HomeFooter } from "../../components/home/HomeFooter";
 import { Deck } from "../../types/deck.type";
 import { DeckListComponent } from "../../components/home/DeckListComponent";
 import { useDecks } from "@/src/contexts/DeckContext";
+import { useGame } from "../../contexts/GameContext";
+import { useRouter } from "expo-router";
 
 /** temporary value before we have a real store */
 
 const downloadedDecks: Deck[] = [];
 
 export default function Home() {
-  const { selectedDecks, decks, removeDeck, addDeck } = useDecks();
+  const { selectedDecks, decks, removeDeck, addDeck, clear } = useDecks();
+  const { initGame } = useGame();
+  const router = useRouter();
 
   const playDisabled = selectedDecks.length === 0;
 
   /** This method is used to handle the click on the 'play' button in the footer. */
   const handlePlayClick = (): void => {
-    alert(`Play button clicked !`);
+    initGame(selectedDecks);
+    router.push({ pathname: "/(playscreen)" });
+    clear();
   };
 
   const handleDeckSelected = (deckId: string): void => {
