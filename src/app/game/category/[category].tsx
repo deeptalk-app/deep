@@ -43,7 +43,11 @@ export default function CategoryView() {
 
   return (
     <View style={{ paddingTop: headerHeight }}>
-      <FocusedCategory cards={filteredCards} dismiss={dismiss} />
+      <FocusedCategory
+        cards={filteredCards}
+        theme={currentCategory.theme}
+        dismiss={dismiss}
+      />
     </View>
   );
 }

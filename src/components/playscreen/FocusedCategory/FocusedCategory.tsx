@@ -10,9 +10,11 @@ const SHOWN_CARD_SIZE = 5;
 
 export default function FocusedCategory({
   cards,
+  theme,
   dismiss,
 }: {
   cards: Card[];
+  theme: string;
   dismiss: () => void;
 }) {
   // If in singular mode, swipeable is only one card
@@ -32,13 +34,13 @@ export default function FocusedCategory({
       <View className="flex h-3/4 w-full">
         <Swiper
           cards={swipeCards}
-          renderCard={(card, index) => {
+          renderCard={(card) => {
             // First drawn card automatically get added to the played card
             // TODO: see how we handle seen card
             // if (index === 0) addPlayedCard(card);
             return (
               <View className="flex h-2/3 p-0 align-top">
-                <PlayingCard card={card} simplified={false} />
+                <PlayingCard theme={theme} card={card} simplified={false} />
               </View>
             );
           }}
