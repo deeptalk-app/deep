@@ -7,6 +7,10 @@ import {
   Alert,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { usePathname, useRouter } from "expo-router";
+import { useGame } from "../../../contexts/GameContext";
+import { useGlobalBottomSheet } from "../../../contexts/GlobalBottomSheetContext";
+import { GameStatistics } from "../GameStatistics/GameStatistics";
 import { useRouter } from "expo-router";
 import { useGame } from "../../contexts/GameContext";
 import { Card } from "../../types/card.type";
@@ -19,6 +23,9 @@ export function PlayscreenHeader() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { playedCards, allCards, addPlayedCard } = useGame();
+  const pathname = usePathname();
+  const { present } = useGlobalBottomSheet();
+  const { selectedDeck, playedCards } = useGame();
 
   // Retrieve all non played cards
   const unplayedCards: Card[] = useMemo(
@@ -63,6 +70,11 @@ export function PlayscreenHeader() {
     });
   };
 
+  /** This method is used to handle the click on the 'statistics' button. */
+  const handleStatisticsPress = () => {
+    present(<GameStatistics />);
+  };
+
   return (
     <View style={{ ...styles.container, paddingTop: insets.top }}>
       {/* Title */}
@@ -72,7 +84,8 @@ export function PlayscreenHeader() {
       {/* Stats button */}
       <IconButton
         style={{ ...styles.iconButton }}
-        onPress={() => alert("Stats clicked !")}
+                onPress={handleStatisticsPress}
+
         icon={<MaterialIcons name="bar-chart" size={24} color="#fff" />}
       />
       {/* Random button */}

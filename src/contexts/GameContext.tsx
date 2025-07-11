@@ -2,6 +2,7 @@ import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 import { Deck } from "../types/deck.type";
 import { Card } from "../types/card.type";
 import { shuffleList } from "../functions/array";
+import { getAllDeckCards } from "../functions/deck";
 
 // Type for context value
 interface GameContextType {
@@ -11,6 +12,8 @@ interface GameContextType {
   pickCard: (deckId: string, categoryId: string) => Card | undefined;
   addPlayedCard: (card: Card) => void;
   initGame: (decks: Deck[]) => void;
+  // Computed values
+  allCards: Card[];
 }
 
 const GameContext = createContext<GameContextType>({} as GameContextType);
@@ -22,6 +25,12 @@ interface GameProviderProps {
 export const GameProvider = ({ children }: GameProviderProps) => {
   const [selectedDeck, setSelectedDeck] = useState<Deck[]>([]);
   const [playedCards, setPlayedCards] = useState<Card[]>([]);
+
+  // TODO: jsdoc
+  const allCards: Card[] = useMemo(
+    () => selectedDeck.map(getAllDeckCards).flat(),
+    [selectedDeck]
+  );
 
   /**
    * This method will pick a random card from the selected category
