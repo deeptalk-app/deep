@@ -6,8 +6,13 @@ import { View } from "react-native";
 import { useHeaderHeight } from "../../hooks/useHeaderHeight";
 import { useBackgroundFade } from "../../hooks/fade/useBackgroundFade";
 
-export default function CardView() {
-  const { category } = useLocalSearchParams<{ category: string }>();
+export type CategoryViewMode = "singular" | "multi";
+
+export default function CategoryView() {
+  const { category, mode = "multi" } = useLocalSearchParams<{
+    category: string;
+    mode?: CategoryViewMode;
+  }>();
   const { selectedDeck, playedCards } = useGame();
   const { back } = useRouter();
   const headerHeight = useHeaderHeight();
@@ -39,7 +44,7 @@ export default function CardView() {
 
   return (
     <View style={{ paddingTop: headerHeight }}>
-      <FocusedCategory cards={filteredCards} dismiss={back} />
+      <FocusedCategory cards={filteredCards} dismiss={back} mode={mode} />
     </View>
   );
 }

@@ -5,17 +5,23 @@ import { Entypo } from "@expo/vector-icons";
 import Swiper from "react-native-deck-swiper";
 import PlayingCard from "../PlayingCard/PlayingCard";
 import { useState } from "react";
+import { CategoryViewMode } from "../../../app/(playscreen)/[category]";
 
 const SHOWN_CARD_SIZE = 5;
 
 export default function FocusedCategory({
   cards,
   dismiss,
+  mode = "multi",
 }: {
   cards: Card[];
   dismiss: () => void;
+  mode: CategoryViewMode;
 }) {
-  const [swipeCards] = useState<Card[]>(cards);
+  // If in singular mode, swipeable is only one card
+  const [swipeCards] = useState<Card[]>(
+    mode === "singular" ? cards.slice(0, 1) : cards
+  );
   const { addPlayedCard } = useGame();
 
   return (

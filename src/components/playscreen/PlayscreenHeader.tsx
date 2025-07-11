@@ -9,6 +9,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { usePathname, useRouter } from "expo-router";
 import { useGame } from "../../contexts/GameContext";
+import { CategoryViewMode } from "../../app/(playscreen)/[category]";
 
 export function PlayscreenHeader() {
   /* useSafeAreaInsets() used to automatically add padding to account for the notch */
@@ -60,7 +61,10 @@ export function PlayscreenHeader() {
       () => {
         router.push({
           pathname: "/(playscreen)/[category]",
-          params: { category: randomCategory.id },
+          params: {
+            category: randomCategory.id,
+            mode: "singular" as CategoryViewMode,
+          },
         });
       },
       isHomePage ? 0 : 250
