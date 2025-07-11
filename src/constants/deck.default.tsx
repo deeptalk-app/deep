@@ -9,7 +9,7 @@ export const decks: Deck[] = [
     categories: [
       {
         id: "415dbd15-f989-4aee-829a-bd579b94e795",
-        theme: "Level 1",
+        theme: "Connaissances",
         level: 1,
         cards: [
           {
@@ -36,7 +36,7 @@ export const decks: Deck[] = [
       },
       {
         id: "d8f30c15-438a-43a5-9121-1321561418f5",
-        theme: "Level 2",
+        theme: "Ami.e.s",
         level: 2,
         cards: [
           {
@@ -47,7 +47,7 @@ export const decks: Deck[] = [
       },
       {
         id: "2961755b-cf18-45e1-b22c-f534f774d689",
-        theme: "Level 3",
+        theme: "Amours",
         level: 3,
         cards: [
           {
