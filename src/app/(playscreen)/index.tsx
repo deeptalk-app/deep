@@ -62,7 +62,7 @@ export default function PlayingPage() {
       <Text className="text-5xl font-kronaone-regular text-white">Piochez</Text>
       {/* List of categories */}
       <ScrollView contentContainerStyle={styles.deckList}>
-        {selectedDeck.map(({ id, categories }) => (
+        {selectedDeck.map(({ id, categories, title, icon }) => (
           // View for deck
           <View key={id} style={styles.deckList}>
             {/* Categories within deck */}
@@ -74,6 +74,8 @@ export default function PlayingPage() {
               };
               return (
                 <CardCategory
+                  title={title}
+                  icon={icon}
                   key={category.id}
                   category={filteredCategory}
                   onCategoryClick={() => handleCategoryClick(id, category)}

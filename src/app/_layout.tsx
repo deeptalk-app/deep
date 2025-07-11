@@ -12,8 +12,6 @@ import { DeckProvider } from "../contexts/DeckContext";
 import { GameProvider } from "../contexts/GameContext";
 import { PlayscreenHeader } from "../components/playscreen/PlayscreenHeader";
 
-const image = require("../../assets/images/bg.png");
-
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -41,7 +39,10 @@ export default function RootLayout() {
       <DeckProvider>
         <GameProvider>
           <Stack
-            screenOptions={{ contentStyle: { backgroundColor: "#0f0f0f" } }}
+            screenOptions={{
+              animation: "default",
+              contentStyle: { backgroundColor: "#0f0f0f" },
+            }}
           >
             <Stack.Screen name="(home)" options={{ headerShown: false }} />
             <Stack.Screen

@@ -3,13 +3,17 @@ import React from "react";
 import { Category } from "@/src/types/category.type";
 
 export function CardCategory({
+  title,
+  icon,
   category,
   onCategoryClick,
 }: {
+  title: string;
+  icon?: React.ReactNode;
   category: Category;
   onCategoryClick: () => void;
 }) {
-  const { level, theme } = category;
+  const { theme } = category;
 
   return (
     <TouchableHighlight
@@ -23,10 +27,13 @@ export function CardCategory({
       <View>
         {/* Top */}
         <View>
-          {/* Level */}
-          <Text className="text-lg text-white font-kronaone-regular">
-            {level}
-          </Text>
+          {/* Deck title & icon */}
+          <View className="flex-row items-center justify-between">
+            <Text className="text-lg text-white font-kronaone-regular">
+              {title}
+            </Text>
+            <View className="scale-50">{icon}</View>
+          </View>
           {/* Theme */}
           <Text className="text-md text-white font-kronaone-regular">
             {theme}
