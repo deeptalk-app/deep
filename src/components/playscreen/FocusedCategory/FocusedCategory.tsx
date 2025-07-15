@@ -15,6 +15,7 @@ export default function FocusedCategory({
   cards: Card[];
   dismiss: () => void;
 }) {
+  // If in singular mode, swipeable is only one card
   const [swipeCards] = useState<Card[]>(cards);
   const { addPlayedCard } = useGame();
 

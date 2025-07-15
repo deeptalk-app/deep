@@ -7,15 +7,27 @@ import {
   Alert,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { usePathname, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useGame } from "../../contexts/GameContext";
+import { Card } from "../../types/card.type";
+import { useMemo } from "react";
+import { IconButton } from "../IconButton";
+import { randomElement } from "../../functions/array";
 
 export function PlayscreenHeader() {
   /* useSafeAreaInsets() used to automatically add padding to account for the notch */
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const pathname = usePathname();
-  const { selectedDeck, playedCards } = useGame();
+  const { playedCards, allCards, addPlayedCard } = useGame();
+
+  // Retrieve all non played cards
+  const unplayedCards: Card[] = useMemo(
+    () =>
+      allCards.filter(
+        ({ id: cardId }) => !playedCards.some(({ id }) => cardId === id)
+      ),
+    [allCards, playedCards]
+  );
 
   /** This method is used to handle the click on the 'end game' button. */
   const handleEndGamePress = () => {
@@ -26,7 +38,7 @@ export function PlayscreenHeader() {
       },
       {
         text: "Oui",
-        onPress: () => router.back(),
+        onPress: () => router.dismissTo("/"),
         style: "destructive",
       },
     ]);
@@ -34,37 +46,21 @@ export function PlayscreenHeader() {
 
   /** This method is used to handle the click on the 'random' button. */
   const handleRandomPress = () => {
-    const isHomePage = pathname === "/";
-    // First, if we're on a focused category page
-    if (!isHomePage) {
-      // Go back to main page
-      router.back();
+    // Retrieve a random non played cards
+    const unplayedCard: Card | undefined = randomElement(unplayedCards);
+
+    // If no unplayed cards, go to /game
+    if (!unplayedCard) {
+      return router.navigate({ pathname: "/game" });
     }
-    // Then retrieve categories
-    const categories = selectedDeck.map(({ categories }) => categories).flat();
-    // Filter categories that have no playable cards
-    const filteredCategories = categories.filter(({ cards }) =>
-      cards.some(
-        ({ id: cardId }) => !playedCards.some(({ id }) => cardId === id)
-      )
-    );
-    // If no filtered categories available, go to main (playscreen)
-    // TODO: Redirect to end game message
-    if (filteredCategories.length === 0)
-      return router.navigate({ pathname: "/" });
-    // Then retrieve a random category
-    const randomIndex = Math.floor(Math.random() * filteredCategories.length);
-    const randomCategory = filteredCategories[randomIndex];
-    // Then navigate to this category (after a small delay)
-    setTimeout(
-      () => {
-        router.push({
-          pathname: "/(playscreen)/[category]",
-          params: { category: randomCategory.id },
-        });
-      },
-      isHomePage ? 0 : 250
-    );
+
+    // Else mark card as played
+    addPlayedCard(unplayedCard);
+    // and navigate to /card/[cardId]
+    return router.navigate({
+      pathname: "/game/card/[card]",
+      params: { card: unplayedCard.id },
+    });
   };
 
   return (
@@ -74,19 +70,24 @@ export function PlayscreenHeader() {
         <Text style={styles.title}>deep</Text>
       </View>
       {/* Stats button */}
-      <TouchableHighlight
+      <IconButton
         style={{ ...styles.iconButton }}
         onPress={() => alert("Stats clicked !")}
-      >
-        <MaterialIcons name="bar-chart" size={24} color="#fff" />
-      </TouchableHighlight>
+        icon={<MaterialIcons name="bar-chart" size={24} color="#fff" />}
+      />
       {/* Random button */}
-      <TouchableHighlight
+      <IconButton
+        disabled={unplayedCards.length === 0}
         style={{ ...styles.iconButton, backgroundColor: "#fff" }}
         onPress={handleRandomPress}
-      >
-        <MaterialCommunityIcons name="dice-3-outline" size={24} color="#000" />
-      </TouchableHighlight>
+        icon={
+          <MaterialCommunityIcons
+            name="dice-3-outline"
+            size={24}
+            color="#000"
+          />
+        }
+      />
       {/* End game button */}
       <TouchableHighlight style={styles.button} onPress={handleEndGamePress}>
         <Text style={styles.buttonText}>Fin de partie</Text>

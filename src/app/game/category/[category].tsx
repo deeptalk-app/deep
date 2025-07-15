@@ -1,15 +1,17 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useGame } from "../../contexts/GameContext";
-import FocusedCategory from "../../components/playscreen/FocusedCategory/FocusedCategory";
-import { Card } from "../../types/card.type";
 import { View } from "react-native";
-import { useHeaderHeight } from "../../hooks/useHeaderHeight";
-import { useBackgroundFade } from "../../hooks/fade/useBackgroundFade";
+import FocusedCategory from "../../../components/playscreen/FocusedCategory/FocusedCategory";
+import { useGame } from "../../../contexts/GameContext";
+import { useHeaderHeight } from "../../../hooks/useHeaderHeight";
+import { Card } from "../../../types/card.type";
+import { useBackgroundFade } from "../../../hooks/fade/useBackgroundFade";
 
-export default function CardView() {
-  const { category } = useLocalSearchParams<{ category: string }>();
+export default function CategoryView() {
+  const { category } = useLocalSearchParams<{
+    category: string;
+  }>();
   const { selectedDeck, playedCards } = useGame();
-  const { back } = useRouter();
+  const { dismissTo } = useRouter();
   const headerHeight = useHeaderHeight();
 
   // Triggers background fade
@@ -18,9 +20,11 @@ export default function CardView() {
   const categories = selectedDeck.map(({ categories }) => categories).flat();
   const currentCategory = categories.find(({ id }) => id === category);
 
+  const dismiss = () => dismissTo("/game");
+
   // If current category can't be found, pop current screen
   if (!currentCategory) {
-    return back();
+    return dismiss();
   }
 
   /**
@@ -39,7 +43,7 @@ export default function CardView() {
 
   return (
     <View style={{ paddingTop: headerHeight }}>
-      <FocusedCategory cards={filteredCards} dismiss={back} />
+      <FocusedCategory cards={filteredCards} dismiss={dismiss} />
     </View>
   );
 }
