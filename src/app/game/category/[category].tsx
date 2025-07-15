@@ -4,24 +4,27 @@ import FocusedCategory from "../../../components/playscreen/FocusedCategory/Focu
 import { useGame } from "../../../contexts/GameContext";
 import { useHeaderHeight } from "../../../hooks/useHeaderHeight";
 import { Card } from "../../../types/card.type";
+import { useBackgroundFade } from "../../../hooks/fade/useBackgroundFade";
 
 export default function CategoryView() {
   const { category } = useLocalSearchParams<{
     category: string;
   }>();
   const { selectedDeck, playedCards } = useGame();
-  const { back } = useRouter();
+  const { dismissTo } = useRouter();
   const headerHeight = useHeaderHeight();
 
   // Triggers background fade
-  // useBackgroundFade();
+  useBackgroundFade();
 
   const categories = selectedDeck.map(({ categories }) => categories).flat();
   const currentCategory = categories.find(({ id }) => id === category);
 
+  const dismiss = () => dismissTo("/game");
+
   // If current category can't be found, pop current screen
   if (!currentCategory) {
-    return back();
+    return dismiss();
   }
 
   /**
@@ -40,7 +43,7 @@ export default function CategoryView() {
 
   return (
     <View style={{ paddingTop: headerHeight }}>
-      <FocusedCategory cards={filteredCards} dismiss={back} />
+      <FocusedCategory cards={filteredCards} dismiss={dismiss} />
     </View>
   );
 }

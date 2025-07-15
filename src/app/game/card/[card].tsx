@@ -2,35 +2,32 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import FocusedCategory from "../../../components/playscreen/FocusedCategory/FocusedCategory";
 import { useGame } from "../../../contexts/GameContext";
 import { useHeaderHeight } from "../../../hooks/useHeaderHeight";
-import { Animated } from "react-native";
-import backgroundFade from "../../../hooks/fade/fadeStore";
+import { View } from "react-native";
+import { useBackgroundFade } from "../../../hooks/fade/useBackgroundFade";
 
 export default function CardView() {
   const { card } = useLocalSearchParams<{
     card: string;
   }>();
   const { allCards } = useGame();
-  const { back, navigate } = useRouter();
+  const { dismissTo } = useRouter();
   const headerHeight = useHeaderHeight();
 
   // Triggers background fade
-  // useBackgroundFade();
+  useBackgroundFade();
 
   const currentCard = allCards.find(({ id }) => id === card);
 
+  const dismiss = () => dismissTo("/game");
+
   // If current card can't be found, pop current screen
   if (!currentCard) {
-    return back();
+    return dismiss();
   }
 
   return (
-    <Animated.View
-      style={{ flex: 1, opacity: backgroundFade, paddingTop: headerHeight }}
-    >
-      <FocusedCategory
-        cards={[currentCard]}
-        dismiss={() => navigate({ pathname: "/game" })}
-      />
-    </Animated.View>
+    <View style={{ flex: 1, paddingTop: headerHeight }}>
+      <FocusedCategory cards={[currentCard]} dismiss={dismiss} />
+    </View>
   );
 }
