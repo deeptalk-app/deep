@@ -18,7 +18,11 @@ export default function TabLayout() {
         }}
       >
         <Stack.Screen name="index" />
-        <Stack.Screen name="[category]" />
+        <Stack.Screen
+          name="category/[category]"
+          getId={({ params }) => params?.category}
+        />
+        <Stack.Screen name="card/[card]" getId={({ params }) => params?.card} />
       </Stack>
     </ImageBackground>
   );

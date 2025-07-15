@@ -1,5 +1,4 @@
 import { TouchableHighlight } from "react-native";
-import { ThemedText } from "./ThemedText";
 import { TouchableHighlightProps } from "react-native-gesture-handler";
 
 export function Button(props: TouchableHighlightProps) {

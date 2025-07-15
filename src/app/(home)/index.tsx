@@ -20,7 +20,7 @@ export default function Home() {
   /** This method is used to handle the click on the 'play' button in the footer. */
   const handlePlayClick = (): void => {
     initGame(selectedDecks);
-    router.push({ pathname: "/(playscreen)" });
+    router.navigate({ pathname: "/game" });
     clear();
   };
 

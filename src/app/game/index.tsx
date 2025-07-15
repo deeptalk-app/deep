@@ -21,8 +21,8 @@ export default function PlayingPage() {
    * This method handles the click of a category
    */
   const handleCategoryClick = (deckId: string, category: Category) => {
-    router.push({
-      pathname: "/(playscreen)/[category]",
+    router.navigate({
+      pathname: "/game/category/[category]",
       params: { category: category.id },
     });
   };

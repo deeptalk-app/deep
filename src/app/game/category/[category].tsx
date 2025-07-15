@@ -1,24 +1,20 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useGame } from "../../contexts/GameContext";
-import FocusedCategory from "../../components/playscreen/FocusedCategory/FocusedCategory";
-import { Card } from "../../types/card.type";
 import { View } from "react-native";
-import { useHeaderHeight } from "../../hooks/useHeaderHeight";
-import { useBackgroundFade } from "../../hooks/fade/useBackgroundFade";
-
-export type CategoryViewMode = "singular" | "multi";
+import FocusedCategory from "../../../components/playscreen/FocusedCategory/FocusedCategory";
+import { useGame } from "../../../contexts/GameContext";
+import { useHeaderHeight } from "../../../hooks/useHeaderHeight";
+import { Card } from "../../../types/card.type";
 
 export default function CategoryView() {
-  const { category, mode = "multi" } = useLocalSearchParams<{
+  const { category } = useLocalSearchParams<{
     category: string;
-    mode?: CategoryViewMode;
   }>();
   const { selectedDeck, playedCards } = useGame();
   const { back } = useRouter();
   const headerHeight = useHeaderHeight();
 
   // Triggers background fade
-  useBackgroundFade();
+  // useBackgroundFade();
 
   const categories = selectedDeck.map(({ categories }) => categories).flat();
   const currentCategory = categories.find(({ id }) => id === category);
@@ -44,7 +40,7 @@ export default function CategoryView() {
 
   return (
     <View style={{ paddingTop: headerHeight }}>
-      <FocusedCategory cards={filteredCards} dismiss={back} mode={mode} />
+      <FocusedCategory cards={filteredCards} dismiss={back} />
     </View>
   );
 }

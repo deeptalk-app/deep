@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 import { Deck } from "../types/deck.type";
 import { Card } from "../types/card.type";
 import { shuffleList } from "../functions/array";
@@ -7,6 +7,7 @@ import { shuffleList } from "../functions/array";
 interface GameContextType {
   selectedDeck: Deck[];
   playedCards: Card[];
+  allCards: Card[];
   pickCard: (deckId: string, categoryId: string) => Card | undefined;
   addPlayedCard: (card: Card) => void;
   initGame: (decks: Deck[]) => void;
@@ -77,9 +78,29 @@ export const GameProvider = ({ children }: GameProviderProps) => {
     setPlayedCards([]);
   };
 
+  /**
+   * All cards from the selected decks
+   */
+  const allCards = useMemo(
+    () =>
+      selectedDeck
+        .map(({ categories }) => categories)
+        .flat()
+        .map(({ cards }) => cards)
+        .flat(),
+    [selectedDeck]
+  );
+
   return (
     <GameContext.Provider
-      value={{ selectedDeck, playedCards, pickCard, initGame, addPlayedCard }}
+      value={{
+        selectedDeck,
+        playedCards,
+        pickCard,
+        initGame,
+        addPlayedCard,
+        allCards,
+      }}
     >
       {children}
     </GameContext.Provider>
