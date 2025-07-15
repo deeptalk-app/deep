@@ -9,3 +9,6 @@ export const shuffleList = <T>(list: T[]): T[] => {
   const copy = [...list];
   return copy.sort(() => Math.random() - 0.5);
 };
+
+export const randomElement = <T>(list: T[]): T | undefined =>
+  list.length > 0 ? list[Math.floor(Math.random() * list.length)] : undefined;

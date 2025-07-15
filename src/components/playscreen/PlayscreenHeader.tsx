@@ -10,9 +10,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { useGame } from "../../contexts/GameContext";
 import { Card } from "../../types/card.type";
-import { shuffleList } from "../../functions/array";
 import { useMemo } from "react";
 import { IconButton } from "../IconButton";
+import { randomElement } from "../../functions/array";
 
 export function PlayscreenHeader() {
   /* useSafeAreaInsets() used to automatically add padding to account for the notch */
@@ -46,13 +46,11 @@ export function PlayscreenHeader() {
 
   /** This method is used to handle the click on the 'random' button. */
   const handleRandomPress = () => {
-    // Retrieve all non played cards (shuffled)
-    // and pick the first one
-    const unplayedCard: Card | undefined = shuffleList(unplayedCards).at(0);
+    // Retrieve a random non played cards
+    const unplayedCard: Card | undefined = randomElement(unplayedCards);
 
     // If no unplayed cards, go to /game
     if (!unplayedCard) {
-      alert("No unplayed cards :(");
       return router.navigate({ pathname: "/game" });
     }
 
