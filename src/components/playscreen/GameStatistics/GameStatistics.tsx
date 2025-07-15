@@ -7,7 +7,7 @@ import { GameStatisticsFocus } from "./GameStatisticsFocus";
 
 export function GameStatistics() {
   const [renderedWidth, setRenderedWidth] = useState<number | undefined>();
-  const [statsExpanded, setStatsExpanded] = useState<boolean>(false);
+  const [collapsed, setCollapsed] = useState<boolean>(true);
   const { selectedDeck, playedCards } = useGame();
 
   const playedCardsWithTheme: CardWithTheme[] = useMemo(
@@ -40,29 +40,22 @@ export function GameStatistics() {
         <Text className="text-3xl font-kronaone-regular text-white">
           Statistiques
         </Text>
-        <GameStatisticsFocus
-          expanded={statsExpanded}
-          setExpanded={setStatsExpanded}
-        />
+        <GameStatisticsFocus expanded={collapsed} setExpanded={setCollapsed} />
       </View>
       {/* Historique */}
-      {!statsExpanded && (
-        <View>
-          <Text className="text-3xl font-kronaone-regular text-white">
-            Historique
-          </Text>
-          {playedCardsWithTheme.length > 0 ? (
-            <CardsCarousel
-              // - (20 * 2) to account for the p-5
-              width={(renderedWidth ?? 0) - 20 * 2}
-              cards={playedCardsWithTheme}
-            />
-          ) : (
-            <Text className="p-5 text-xl font-jost-regular text-white">
-              Aucune carte jouée
-            </Text>
-          )}
-        </View>
+      <Text className="text-3xl font-kronaone-regular text-white">
+        Historique
+      </Text>
+      {playedCardsWithTheme.length > 0 ? (
+        <CardsCarousel
+          // - (20 * 2) to account for the p-5
+          width={(renderedWidth ?? 0) - 20 * 2}
+          cards={playedCardsWithTheme}
+        />
+      ) : (
+        <Text className="p-5 text-xl font-jost-regular text-white">
+          Aucune carte jouée
+        </Text>
       )}
     </View>
   );

@@ -49,11 +49,11 @@ export default function RootLayout() {
                 }}
               >
                 <Stack.Screen name="(home)" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="game"
-              options={{
-                header: () => <PlayscreenHeader />,
-              }}
+                <Stack.Screen
+                  name="game"
+                  options={{
+                    header: () => <PlayscreenHeader />,
+                  }}
                 />
                 <Stack.Screen name="+not-found" />
               </Stack>

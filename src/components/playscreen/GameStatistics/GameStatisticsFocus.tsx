@@ -1,6 +1,7 @@
 import { View, Text, TouchableHighlight } from "react-native";
 import { useGame } from "../../../contexts/GameContext";
 import { getAllDeckCards } from "../../../functions/deck";
+import Collapsible from "react-native-collapsible";
 
 function GameStatisticsFocusExpanded() {
   const { playedCards, selectedDeck } = useGame();
@@ -80,11 +81,12 @@ export function GameStatisticsFocus({
       className="w-100 bg-white rounded-2xl p-7"
       onPress={() => setExpanded(!expanded)}
     >
-      {expanded ? (
-        <GameStatisticsFocusExpanded />
-      ) : (
+      <View>
         <GameStatisticsFocusMinimized />
-      )}
+        <Collapsible collapsed={expanded}>
+          <GameStatisticsFocusExpanded />
+        </Collapsible>
+      </View>
     </TouchableHighlight>
   );
 }

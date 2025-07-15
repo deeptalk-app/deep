@@ -3,12 +3,12 @@ import { Card } from "../../../types/card.type";
 import { useGame } from "../../../contexts/GameContext";
 import { Entypo } from "@expo/vector-icons";
 import Swiper from "react-native-deck-swiper";
-import PlayingCard from "../PlayingCard/PlayingCard";
+import DrawStackCard from "./DrawStackCard/DrawStackCard";
 import { useState } from "react";
 
-const SHOWN_CARD_SIZE = 5;
+const SHOWN_CARD_SIZE = 15;
 
-export default function FocusedCategory({
+export default function DrawStack({
   cards,
   theme,
   dismiss,
@@ -34,16 +34,11 @@ export default function FocusedCategory({
       <View className="flex h-3/4 w-full">
         <Swiper
           cards={swipeCards}
-          renderCard={(card) => {
-            // First drawn card automatically get added to the played card
-            // TODO: see how we handle seen card
-            // if (index === 0) addPlayedCard(card);
-            return (
-              <View className="flex h-2/3 p-0 align-top">
-                <PlayingCard theme={theme} card={card} simplified={false} />
-              </View>
-            );
-          }}
+          renderCard={(card) => (
+            <View className="flex h-2/3 p-0 align-top">
+              <DrawStackCard theme={theme} card={card} simplified={false} />
+            </View>
+          )}
           // Stack params
           cardIndex={0}
           stackSize={SHOWN_CARD_SIZE}

@@ -1,6 +1,6 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { View } from "react-native";
-import FocusedCategory from "../../../components/playscreen/FocusedCategory/FocusedCategory";
+import DrawStack from "../../../components/playscreen/DrawStack/DrawStack";
 import { useGame } from "../../../contexts/GameContext";
 import { useHeaderHeight } from "../../../hooks/useHeaderHeight";
 import { Card } from "../../../types/card.type";
@@ -43,7 +43,7 @@ export default function CategoryView() {
 
   return (
     <View style={{ paddingTop: headerHeight }}>
-      <FocusedCategory
+      <DrawStack
         cards={filteredCards}
         theme={currentCategory.theme}
         dismiss={dismiss}

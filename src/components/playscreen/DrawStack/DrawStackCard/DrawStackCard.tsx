@@ -1,8 +1,8 @@
-import { Card } from "@/src/types/card.type";
 import { BlurView } from "expo-blur";
 import { View, Text, StyleSheet } from "react-native";
+import { Card } from "../../../../types/card.type";
 
-export default function PlayingCard({
+export default function DrawStackCard({
   theme,
   card,
 }: {

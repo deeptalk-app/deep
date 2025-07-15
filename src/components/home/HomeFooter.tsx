@@ -1,5 +1,5 @@
 import { MaterialCommunityIcons, FontAwesome6 } from "@expo/vector-icons";
-import { StyleSheet, TouchableHighlight, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "../ThemedText";
 import { IconButton } from "../IconButton";

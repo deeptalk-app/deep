@@ -1,19 +1,17 @@
 import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 import { Deck } from "../types/deck.type";
-import { Card } from "../types/card.type";
+import { Card, CardWithTheme } from "../types/card.type";
 import { shuffleList } from "../functions/array";
-import { getAllDeckCards } from "../functions/deck";
 
 // Type for context value
 interface GameContextType {
   selectedDeck: Deck[];
   playedCards: Card[];
-  allCards: Card[];
   pickCard: (deckId: string, categoryId: string) => Card | undefined;
   addPlayedCard: (card: Card) => void;
   initGame: (decks: Deck[]) => void;
   // Computed values
-  allCards: Card[];
+  allCards: CardWithTheme[];
 }
 
 const GameContext = createContext<GameContextType>({} as GameContextType);
@@ -25,12 +23,6 @@ interface GameProviderProps {
 export const GameProvider = ({ children }: GameProviderProps) => {
   const [selectedDeck, setSelectedDeck] = useState<Deck[]>([]);
   const [playedCards, setPlayedCards] = useState<Card[]>([]);
-
-  // TODO: jsdoc
-  const allCards: Card[] = useMemo(
-    () => selectedDeck.map(getAllDeckCards).flat(),
-    [selectedDeck]
-  );
 
   /**
    * This method will pick a random card from the selected category
@@ -90,12 +82,14 @@ export const GameProvider = ({ children }: GameProviderProps) => {
   /**
    * All cards from the selected decks
    */
-  const allCards = useMemo(
+  const allCards: CardWithTheme[] = useMemo(
     () =>
       selectedDeck
+        // Flatten all of the cards
         .map(({ categories }) => categories)
         .flat()
-        .map(({ cards }) => cards)
+        // Append the theme too
+        .map(({ theme, cards }) => cards.map((card) => ({ ...card, theme })))
         .flat(),
     [selectedDeck]
   );
