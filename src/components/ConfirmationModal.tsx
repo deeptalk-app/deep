@@ -11,15 +11,20 @@ export default function ConfirmationModal({
   onDismiss: () => void;
 }) {
   return (
-    <View className="p-5 flex-col gap-10">
-      <Text className="text-3xl font-kronaone-regular text-white">{title}</Text>
+    <View className="p-5 flex-col gap-10 pb-10">
+      <Text className="text-2xl font-kronaone-regular text-white w-full text-center">
+        {title}
+      </Text>
       {/* Buttons */}
       <View className="flex-row gap-3">
-        <Button onPress={onDismiss}>
-          <Text className="text-white">Non</Text>
+        <Button onPress={onDismiss} className="bg-white py-3">
+          <Text className="text-lg text-black">Non</Text>
         </Button>
-        <Button onPress={onAccept}>
-          <Text className="text-white">Oui</Text>
+        <Button
+          onPress={onAccept}
+          className="border border-white bg-white/20 py-3"
+        >
+          <Text className="text-lg text-white">Oui</Text>
         </Button>
       </View>
     </View>
