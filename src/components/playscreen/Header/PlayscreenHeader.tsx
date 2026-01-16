@@ -1,13 +1,7 @@
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useMemo } from "react";
-import {
-  Alert,
-  View,
-  TouchableHighlight,
-  Text,
-  StyleSheet,
-} from "react-native";
+import { View, TouchableHighlight, Text, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useGame } from "../../../contexts/GameContext";
 import { useGlobalBottomSheet } from "../../../contexts/GlobalBottomSheetContext";
@@ -15,13 +9,14 @@ import { randomElement } from "../../../functions/array";
 import { Card } from "../../../types/card.type";
 import { IconButton } from "../../IconButton";
 import { GameStatistics } from "../GameStatistics/GameStatistics";
+import ConfirmationModal from "../../ConfirmationModal";
 
 export function PlayscreenHeader() {
   /* useSafeAreaInsets() used to automatically add padding to account for the notch */
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { playedCards, allCards, addPlayedCard } = useGame();
-  const { present } = useGlobalBottomSheet();
+  const { present, close } = useGlobalBottomSheet();
 
   // Retrieve all non played cards
   const unplayedCards: Card[] = useMemo(
@@ -34,17 +29,16 @@ export function PlayscreenHeader() {
 
   /** This method is used to handle the click on the 'end game' button. */
   const handleEndGamePress = () => {
-    Alert.alert("Êtes-vous sûr.e de vouloir terminer la partie ?", "", [
-      {
-        text: "Non",
-        style: "cancel",
-      },
-      {
-        text: "Oui",
-        onPress: () => router.dismissTo("/"),
-        style: "destructive",
-      },
-    ]);
+    present(
+      <ConfirmationModal
+        title={"Êtes-vous sûr.e de vouloir terminer la partie ?"}
+        onAccept={() => {
+          close();
+          router.dismissTo("/");
+        }}
+        onDismiss={close}
+      />
+    );
   };
 
   /** This method is used to handle the click on the 'random' button. */
