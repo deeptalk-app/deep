@@ -2,7 +2,7 @@ import { Modal, View, TouchableWithoutFeedback } from "react-native";
 import { Deck } from "../../types/deck.type";
 import { Entypo } from "@expo/vector-icons";
 import { ThemedText } from "../ThemedText";
-import { CardsCarousel } from "./CardsCarousel";
+import { CardsCarousel } from "../CardsCarousel/CardsCarousel";
 import { useState } from "react";
 
 export function DeckModal({

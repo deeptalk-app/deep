@@ -1,24 +1,27 @@
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import { useMemo } from "react";
 import {
-  StyleSheet,
+  Alert,
   View,
   TouchableHighlight,
   Text,
-  Alert,
+  StyleSheet,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useRouter } from "expo-router";
-import { useGame } from "../../contexts/GameContext";
-import { Card } from "../../types/card.type";
-import { useMemo } from "react";
-import { IconButton } from "../IconButton";
-import { randomElement } from "../../functions/array";
+import { useGame } from "../../../contexts/GameContext";
+import { useGlobalBottomSheet } from "../../../contexts/GlobalBottomSheetContext";
+import { randomElement } from "../../../functions/array";
+import { Card } from "../../../types/card.type";
+import { IconButton } from "../../IconButton";
+import { GameStatistics } from "../GameStatistics/GameStatistics";
 
 export function PlayscreenHeader() {
   /* useSafeAreaInsets() used to automatically add padding to account for the notch */
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { playedCards, allCards, addPlayedCard } = useGame();
+  const { present } = useGlobalBottomSheet();
 
   // Retrieve all non played cards
   const unplayedCards: Card[] = useMemo(
@@ -63,6 +66,11 @@ export function PlayscreenHeader() {
     });
   };
 
+  /** This method is used to handle the click on the 'statistics' button. */
+  const handleStatisticsPress = () => {
+    present(<GameStatistics />);
+  };
+
   return (
     <View style={{ ...styles.container, paddingTop: insets.top }}>
       {/* Title */}
@@ -72,7 +80,7 @@ export function PlayscreenHeader() {
       {/* Stats button */}
       <IconButton
         style={{ ...styles.iconButton }}
-        onPress={() => alert("Stats clicked !")}
+        onPress={handleStatisticsPress}
         icon={<MaterialIcons name="bar-chart" size={24} color="#fff" />}
       />
       {/* Random button */}
@@ -97,6 +105,11 @@ export function PlayscreenHeader() {
   );
 }
 
+/**
+ * Description placeholder
+ *
+ * @type {*}
+ */
 const styles = StyleSheet.create({
   container: {
     padding: 15,
